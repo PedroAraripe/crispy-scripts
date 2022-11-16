@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import scriptsNav from "../constants/scriptsList.js";
 
 const LogoHome = styled.div`
   & {
-    color: #e6e6e6;
+    color: var(--theme-white);
     text-decoration: none;
     font-weight: bold;
     font-size: 1rem;
@@ -18,7 +19,7 @@ const LogoHome = styled.div`
   }
 
   &>:first-child {
-    color: hsl(0 60% 50%);
+    color: var(--theme-red);
     margin-right: 0.3rem;
   }
   
@@ -30,7 +31,7 @@ const LogoHome = styled.div`
 
 const LinkItem = styled.div`
   &, & > * {
-    color: ${props => props.isCurrent ? 'hsl(0 60% 50%)' : '#e6e6e6'};
+    color: ${props => props.isCurrent ? 'var(--theme-red)' : 'var(--theme-white)'};
     text-decoration: none;
     font-weight: bold;
     font-size: 0.8rem;
@@ -44,18 +45,12 @@ const LinkItem = styled.div`
   }
 
   &:hover {
-    color: hsl(0 60% 90%);
+    color: ${props => !props.isCurrent ? 'var(--theme-red)' : 'var(--theme-white)'};
     transform: translateX(-0.5rem);
   }
 `;
 
 export default function Navbar() {
-  const scriptsNav = [
-    {
-      name: 'SHELL',
-      repositoryName: 'shell-automations'
-    },
-  ];
 
   return (
     <nav className='container py-2 my-2 d-flex justify-content-between align-items-center'>

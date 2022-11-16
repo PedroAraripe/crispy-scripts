@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getData } from '../../store/scriptsContent';
 
-export default function WrapperContent ({props}) {
-    const scriptsNav = [
-      {
-        name: 'SHELL',
-        repositoryName: 'shell-automations'
-      },
-    ];
-
-    const [data, updateData] = useState([]);
+export default function Home () {
+    const scriptsContent = useSelector((state) => state.scriptsContent.value);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const getData = async () => {
-            try {
-                const totalData = [];
-
-                for(const script of scriptsNav) {
-                    let { data } = await axios.get(`https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`);
-
-                    data
-                        .filter(item => item.name.toUpperCase() !== "LICENSE")
-                        .map(item => totalData.push(item));
-                    
-                }
-        
-                updateData(totalData);
-                console.log({data});
-        
-            } catch (e) {
-                console.error(e);
-        
-            }
-        }
-        getData();
+        dispatch(getData());
       }, []);
 
     return (
-        <div className='bg-danger'>
-            home
+        <div>
+            {
+                scriptsContent
+                    .map((item, index) => {
+                        const isLast = index !== scriptsContent.length -1;
+                        const scriptName = item.name.split("_").join(" ");
+                        const decodedContent = atob(item.script.data_code.content).split("\n").join("<br>");
+
+                        return (
+                            <>
+                                <h3 className={`h3 text-capitalize mb-3 ${index && 'mt-5'}`} style={{color: "var(--theme-white)"}}>{scriptName}</h3>
+                                <code dangerouslySetInnerHTML={{__html: decodedContent}}  key={index} className={`${!isLast && 'mb-2'}`}>
+                                </code>
+                            </>
+                        )
+                    })
+            }
         </div>
     )
   }

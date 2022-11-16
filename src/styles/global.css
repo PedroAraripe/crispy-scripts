@@ -1,6 +1,11 @@
 @import "./themes"; 
 @import "./dude "; 
 
+:root {
+  --theme-red: hsl(0 60% 50%);
+  --theme-white: hsl(0 60% 95%);
+}
+
 html,body {
   background-color: #202124;
   font-size: 18px;
