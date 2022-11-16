@@ -28,7 +28,7 @@ export default function Home () {
                                 
                                 <p dangerouslySetInnerHTML={{__html: decodedTextContent}}></p>
                                 
-                               <div className="p-3">
+                               <div className="p-2 p-lg-3">
                                 <code
                                         dangerouslySetInnerHTML={{__html: decodedCodeContent}}
                                         key={index}
