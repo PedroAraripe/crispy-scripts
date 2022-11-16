@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/crispy-scripts/static/css/main.d27e8e69.css",
-    "main.js": "/crispy-scripts/static/js/main.96c55bd0.js",
+    "main.css": "/crispy-scripts/static/css/main.5305316c.css",
+    "main.js": "/crispy-scripts/static/js/main.38b20b52.js",
     "index.html": "/crispy-scripts/index.html",
-    "main.d27e8e69.css.map": "/crispy-scripts/static/css/main.d27e8e69.css.map",
-    "main.96c55bd0.js.map": "/crispy-scripts/static/js/main.96c55bd0.js.map"
+    "main.5305316c.css.map": "/crispy-scripts/static/css/main.5305316c.css.map",
+    "main.38b20b52.js.map": "/crispy-scripts/static/js/main.38b20b52.js.map"
   },
   "entrypoints": [
-    "static/css/main.d27e8e69.css",
-    "static/js/main.96c55bd0.js"
+    "static/css/main.5305316c.css",
+    "static/js/main.38b20b52.js"
   ]
 }
