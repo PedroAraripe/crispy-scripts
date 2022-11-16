@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
 
 const LogoHome = styled.div`
   & {
