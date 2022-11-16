@@ -15,7 +15,7 @@ export default function App() {
   const querys = new URLSearchParams(search);
   const currentRepositoryName = querys.get('project');
 
-  console.log({currentRepositoryName})
+  console.log({currentRepositoryName, isUpdated:"updated"})
 
   return (
     <>
