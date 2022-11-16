@@ -17,13 +17,24 @@ export default function Home () {
                     .map((item, index) => {
                         const isLast = index !== scriptsContent.length -1;
                         const scriptName = item.name.split("_").join(" ");
-                        const decodedContent = atob(item.script.data_code.content).split("\n").join("<br>");
+                        const decodedTextContent = atob(item.script.data_text.content).split("\n").join("<br>");
+                        const decodedCodeContent = atob(item.script.data_code.content).split("\n").join("<br>");
 
                         return (
                             <>
-                                <h3 className={`h3 text-capitalize mb-3 ${index && 'mt-5'}`} style={{color: "var(--theme-white)"}}>{scriptName}</h3>
-                                <code dangerouslySetInnerHTML={{__html: decodedContent}}  key={index} className={`${!isLast && 'mb-2'}`}>
-                                </code>
+                                <h3 className={`h3 text-capitalize mb-3 ${index && 'mt-5'}`} style={{color: "var(--theme-white)"}}>
+                                    {scriptName}
+                                </h3>
+                                
+                                <p dangerouslySetInnerHTML={{__html: decodedTextContent}}></p>
+                                
+                               <div className="p-3">
+                                <code
+                                        dangerouslySetInnerHTML={{__html: decodedCodeContent}}
+                                        key={index}
+                                        className={`${!isLast && 'mb-2'}`}
+                                    ></code>
+                               </div>
                             </>
                         )
                     })
