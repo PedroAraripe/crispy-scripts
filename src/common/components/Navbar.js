@@ -64,7 +64,7 @@ export default function Navbar({currentRepositoryName}) {
           
           {scriptsNav.map((script, index) => (
             <Link
-              to={`?project=${script.repositoryName}`}
+              to={`/${script.repositoryName}`}
               className={index !== scriptsNav.length -1 ? 'me-2 me-lg-3' : ''}
               key={index}
               style={{textDecoration: 'none'}}

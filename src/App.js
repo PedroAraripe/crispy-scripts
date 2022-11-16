@@ -2,11 +2,11 @@ import React from "react";
 import {
   Routes,
   Route,
-  BrowserRouter as Router,
   useLocation,
 } from "react-router-dom";
 
 import Home from "./pages/home";
+import RepositoryTemplate from "./pages/repository-template";
 import Navbar from "./common/components/Navbar";
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
       <Navbar currentRepositoryName={currentRepositoryName} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/teste" element={<Home />} />
+        <Route path="/:repositoryName" element={<RepositoryTemplate repository={{'name': 'teste'}} />} />
       </Routes>
     </>
   )
