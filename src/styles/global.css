@@ -7,10 +7,6 @@ html,body {
   font-family: 'Montserrat', sans-serif !important;
 }
 
-.logo-home:hover {
-  color: black
-}
-
 li {
   list-style: none;
 }

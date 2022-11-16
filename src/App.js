@@ -1,20 +1,29 @@
-import React from 'react';
+import React from "react";
+import {
+  Routes,
+  Route,
+  BrowserRouter as Router,
+  useLocation,
+} from "react-router-dom";
 
-import styled from 'styled-components'
+import Home from "./pages/home";
+import Navbar from "./common/components/Navbar";
 
-import Home from './pages/home/index.js'
+export default function App() {
 
-const WrapperContainerX = styled.div`
-  max-width: 100vw;
-  overflow: clip;
-`
+  const search = useLocation().search;
+  const querys = new URLSearchParams(search);
+  const currentRepositoryName = querys.get('project');
 
-function App() {
+  console.log({currentRepositoryName})
+
   return (
-    <WrapperContainerX className="App">
-     <Home />
-    </WrapperContainerX>
-  );
+    <>
+      <Navbar currentRepositoryName={currentRepositoryName} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/teste" element={<Home />} />
+      </Routes>
+    </>
+  )
 }
-
-export default App;
