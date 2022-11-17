@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const CardImage = styled.div`
-  background: gray;
+const CardImage = styled.img`
+  // background: gray;
   width: 100%;
   aspect-ratio: 1.576;
 `;
@@ -23,7 +23,11 @@ export default function CardContent ({content, className = ""}) {
 
   return (
     <div className={`pb-4 pb-lg-0 ${className}`}>
-      <CardImage />
+      <CardImage
+        src="https://picsum.photos/300/200"
+        loading="lazy"
+        alt="random image thumbnail"
+      />
 
       <h5 className="h6 fw-bold text-capitalize mb-3 pt-3 pt-lg-4" style={{color: "var(--theme-white)"}}>
           {scriptName}
