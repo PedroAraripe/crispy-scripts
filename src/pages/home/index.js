@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import CardContent from '../../common/components/CardContent';
 import { getData } from '../../store/scriptsContent';
 
 export default function Home () {
@@ -11,34 +12,23 @@ export default function Home () {
       }, []);
 
     return (
-        <div>
-            {
-                scriptsContent
-                    .map((item, index) => {
-                        const isLast = index !== scriptsContent.length -1;
-                        const scriptName = item.name.split("_").join(" ");
-                        const decodedTextContent = atob(item.script.data_text.content).split("\n").join("<br>");
-                        const decodedCodeContent = atob(item.script.data_code.content).split("\n").join("<br>");
-
-                        return (
-                            <>
-                                <h3 className={`h3 text-capitalize mb-3 ${index && 'mt-5'}`} style={{color: "var(--theme-white)"}}>
-                                    {scriptName}
-                                </h3>
-                                
-                                <p dangerouslySetInnerHTML={{__html: decodedTextContent}}></p>
-                                
-                               <div className="p-2 p-lg-3">
-                                <code
-                                        dangerouslySetInnerHTML={{__html: decodedCodeContent}}
-                                        key={index}
-                                        className={`${!isLast && 'mb-2'}`}
-                                    ></code>
-                               </div>
-                            </>
-                        )
-                    })
-            }
+        <div className="row">
+            <div className="col-lg-8">
+                <div className="row">
+                    {scriptsContent
+                        .map((item, index) => {
+                            return ( 
+                                <CardContent
+                                    key={index}
+                                    content={item}
+                                    className="col-lg-6"
+                                />
+                            )
+                        })
+                    }
+                </div>
+            </div>
+            <div className="col-lg-4">suggestions</div>
         </div>
     )
   }

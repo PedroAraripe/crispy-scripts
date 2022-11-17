@@ -12,6 +12,13 @@ html,body {
   font-family: 'Montserrat', sans-serif !important;
 }
 
+@media (max-width: 992px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+}
+
 li {
   list-style: none;
 }
