@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const CardImage = styled.img`
+const CardImage = styled.div`
+  background: url("${props => props.backgroundUrl}") no-repeat;
   width: 100%;
-  aspect-ratio: 1.576;
+  aspect-ratio: 1.5;
+  background-color: gray;
   border-radius: 10px;
+  filter: brightness(90%);
+  // background-size: contain;
+  background-size: cover;
 `;
 
 const PreviewContent = styled.p`
@@ -17,19 +22,16 @@ const PreviewContent = styled.p`
   text-overflow: ellipsis;
 `;
 
-export default function CardContent ({content, className = ""}) {
+export default function CardContent ({content, index, className = ""}) {
   const scriptName = content.name.split("_").join(" ");
   const decodedTextContent = atob(content.script.data_text.content).split("\n").join("<br>");
-
-  const imgsRandom = document.querySelectorAll(".random-image");
-  imgsRandom.forEach((img, index) => img.src = `https://picsum.photos/300/200?random=${index + 1}`);
 
   return (
     <div className={`pb-4 pb-lg-0 ${className}`}>
       <CardImage
         className="random-image"
-        loading="lazy"
         alt="random image thumbnail"
+        backgroundUrl={`https://picsum.photos/400/300?random=${index + 1}`}
       />
 
       <h5 className="h6 fw-bold text-capitalize mb-3 pt-3 pt-lg-4" style={{color: "var(--theme-white)"}}>

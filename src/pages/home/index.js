@@ -21,6 +21,7 @@ export default function Home () {
                                 <CardContent
                                     key={index}
                                     content={item}
+                                    index={index}
                                     className="col-lg-6"
                                 />
                             )
