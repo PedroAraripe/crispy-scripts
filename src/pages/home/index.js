@@ -12,24 +12,19 @@ export default function Home () {
       }, []);
 
     return (
-        <div className="row">
-            <div className="col-lg-8">
-                <div className="row">
-                    {scriptsContent
-                        .map((item, index) => {
-                            return ( 
-                                <CardContent
-                                    key={index}
-                                    content={item}
-                                    index={index}
-                                    className="col-lg-6"
-                                />
-                            )
-                        })
-                    }
-                </div>
-            </div>
-            <div className="col-lg-4">suggestions</div>
+        <div className="row py-2 py-lg-4">
+            {scriptsContent
+                .map((item, index) => {
+                    return ( 
+                        <CardContent
+                            key={index}
+                            content={item}
+                            index={index}
+                            className="col-lg-6"
+                        />
+                    )
+                })
+            }
         </div>
     )
   }

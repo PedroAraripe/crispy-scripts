@@ -7,29 +7,35 @@ export const getData = createAsyncThunk(
   async () => {
     const totalData = [];
 
-    await Promise.all(scriptsNav.map(async (script) => {
+    await Promise.allSettled(scriptsNav.map(async (script) => {
       const url = `https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`;
-      let { data } = await axios.get(url);
+      const { data } = await axios.get(url);
 
       data
         .filter(item => item.name.toUpperCase() !== "LICENSE")
         .map(item => {
-          item.repository_name = script.repositoryName;
+          item.repository = {
+            name: script.name,
+            repository_name: script.repositoryName,
+          };
 
           totalData.push(item);
         })
     }));
 
-    await Promise.all(totalData.map(async (script) => {
-      const urlText = `https://api.github.com/repos/PedroAraripe/${script.repository_name}/contents/${script.name}/README.md`;
-      const urlCode = `https://api.github.com/repos/PedroAraripe/${script.repository_name}/contents/${script.name}/run.sh`;
+    await Promise.allSettled(totalData.map(async (script) => {
+      const urlText = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/contents/${script.name}/README.md`;
+      const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/commits?path=${script.name}&page=1&per_page=1`;
+      const urlCode = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/contents/${script.name}/run.sh`;
 
-      let { data: dataText } = await axios.get(urlText);
-      let { data: dataCode } = await axios.get(urlCode);
+      const { data: dataText } = await axios.get(urlText);
+      const { data: dataLastCommit } = await axios.get(urlLastCommit);
+      const { data: dataCode } = await axios.get(urlCode);
 
       script.script = {
         data_text: dataText,
-        data_code: (dataCode),
+        last_commit: dataLastCommit[0],
+        data_code: dataCode,
       };
     }));
 
