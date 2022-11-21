@@ -4,8 +4,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import Home from "./pages/home";
-import RepositoryTemplate from "./pages/repository-template";
+import Home from "./pages/Home";
+import RepositoryTemplate from "./pages/ScriptArticle";
 import Navbar from "./common/components/Navbar";
 import WrapperContent from "./common/components/WrapperContentTemplate";
 

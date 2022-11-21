@@ -2,17 +2,8 @@ import moment from "moment/moment";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-const CardImage = styled.div`
-  background: url("${props => props.backgroundUrl}") no-repeat;
-  width: 100%;
-  aspect-ratio: 1.5;
-  background-color: gray;
-  border-radius: 10px;
-  filter: brightness(90%);
-  background-size: cover;
-  position: relative;
-`;
+import { AboutContent, CardImage } from "./Contents";
+import { useNavigate  } from "react-router-dom";
 
 const ScriptTag = styled.span`
   top: 0.5rem;
@@ -46,50 +37,47 @@ const DateScriptFormatter = styled.div`
   }
 `;
 
-const PreviewContent = styled.p`
-  font-size: 0.9rem;
-  letter-spacing: 0.2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 export default function CardContent ({content, index, className = ""}) {
+  const navigate = useNavigate();
   const scriptName = content.name.split("_").join(" ");
   const lastScriptCommit = content.script?.last_commit.commit.author.date;
-  const decodedTextContent = atob(content.script.data_text.content).split("\n").join("<br>");
+  const decodedTextContent = atob(content.script?.data_text.content).split("\n").join("<br>");
+  const imageBanner = `https://picsum.photos/seed/${content.script?.data_code.sha}/400/300`
+
+  const urlRedirect = `/scripts/?project_name=${content.repository.repository_name}&script_name=${content.name}`;
 
   return (
     <div className={`pb-4 pb-lg-0 ${className}`}>
-      <CardImage
-        className="random-image"
-        alt={`script ${scriptName} random image`}
-        backgroundUrl={`https://picsum.photos/seed/${index + 1}/400/300`}
-      >
-        <ScriptTag>
-          <Link
-            to={`/scripts/?project_name=${content.repository.repository_name}`}
-            key={index}
-            style={{textDecoration: 'none'}}
+      <Link
+        to={urlRedirect}
+        key={index}
+        style={{textDecoration: 'none'}}
+        >
+          <CardImage
+            className="random-image"
+            alt={`script ${scriptName} random image`}
+            backgroundUrl={imageBanner}
           >
+            <ScriptTag onClick={() => navigate(`/scripts/?project_name=${content.repository.repository_name}`)}>
               {content.repository.name}
-          </Link>
-        </ScriptTag>
-      </CardImage>
+            </ScriptTag>
+          </CardImage>
+        </Link>
 
       <DateScriptFormatter className="pt-2 pt-lg-3" dateScript={lastScriptCommit} />
+      
+      <div className="mb-3 pt-2 pt-lg-3">
+        <Link
+          to={urlRedirect}
+          key={index}
+          style={{textDecoration: 'none', color: "var(--theme-white)"}}
+          className="h6 fw-bold text-capitalize"
+        >
+            {scriptName}
+        </Link>
+      </div>
 
-      <h6 className="h6 fw-bold text-capitalize mb-3 pt-2 pt-lg-3" style={{color: "var(--theme-white)"}}>
-          {scriptName}
-      </h6>
-
-      <PreviewContent dangerouslySetInnerHTML={{__html: decodedTextContent}} />
-
-      {/* <div className="p-2 p-lg-3">
-          <code dangerouslySetInnerHTML={{__html: decodedCodeContent}} />
-      </div> */}
+      <AboutContent dangerouslySetInnerHTML={{__html: decodedTextContent}} />
     </div>
   )
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import CardContent from '../../common/components/CardContent';
+import { setShowBannerValue } from '../../store/banner';
 import { getData } from '../../store/scriptsContent';
 
 export default function Home () {
@@ -9,10 +10,11 @@ export default function Home () {
 
     useEffect(() => {
         dispatch(getData());
+        dispatch(setShowBannerValue(''));
       }, []);
 
     return (
-        <div className="row py-2 py-lg-4">
+        <div className="row">
             {scriptsContent
                 .map((item, index) => {
                     return ( 

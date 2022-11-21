@@ -43,8 +43,36 @@ export const getData = createAsyncThunk(
   }
 );
 
+export const getScriptData = createAsyncThunk(
+  'scriptsContent/getScriptData',
+  async ({projectName, scriptName}) => {
+    const currentScriptData = {
+      repositoryName: projectName,
+      name: scriptName,
+    };
+
+    
+    const urlText = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/README.md`;
+    const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${projectName}/commits?path=${scriptName}&page=1&per_page=1`;
+    const urlCode = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/run.sh`;
+
+    const { data: dataText } = await axios.get(urlText);
+    const { data: dataLastCommit } = await axios.get(urlLastCommit);
+    const { data: dataCode } = await axios.get(urlCode);
+
+    currentScriptData.script = {
+      data_text: dataText,
+      last_commit: dataLastCommit[0],
+      data_code: dataCode,
+    };
+
+    return currentScriptData;
+  }
+);
+
 const initialState = {
-  value: []
+  value: [],
+  current_script: {},
 };
 
 export const scriptsContent = createSlice({
@@ -54,6 +82,10 @@ export const scriptsContent = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getData.fulfilled, (state, action) => {
       state.value = action.payload;
+    })
+
+    builder.addCase(getScriptData.fulfilled, (state, action) => {
+      state.current_script = action.payload;
     })
   },
 });
