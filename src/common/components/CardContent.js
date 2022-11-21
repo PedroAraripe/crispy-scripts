@@ -21,27 +21,21 @@ const ScriptTag = styled.span`
   background: var(--theme-red);
   position: absolute;
   border-radius: 0.8rem;
-  padding: 0.4rem 0.5rem;
-  border: 1px solid var(--theme-red);
+  padding: 0.5rem 0.6rem;
+
+  opacity: 0.7;
 
   font-size: 0.7rem;
 
   &:hover {
     transition: all 0.3s;
-
-    & {
-      background: var(--theme-white);
-    }
-    
-    & * {
-      color: var(--theme-red);
-    }
+    opacity: 1;
   }
 
-  & * {
+  &, & * {
     text-decoration: none;
     font-weight: bold;
-    color: var(--theme-white);
+    color: var(--theme-white) !important;
   }
 `;
 
