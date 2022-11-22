@@ -17,7 +17,8 @@ const DivisorColumn = styled.div`
 `;
 
 const ArticleBanner = styled.div`
-  height: ${props => props.backgroundUrl && '250px'};
+  max-height: 250px;
+  ${props => props.backgroundUrl? 'aspect-ratio: 3': ''};
   background: url("${props => props.backgroundUrl}") no-repeat;
   width: 100%;
   background-color: gray;
@@ -25,6 +26,7 @@ const ArticleBanner = styled.div`
   filter: brightness(90%);
   background-size: cover;
   position: relative;
+  background-position: center center;
 `
 export default function WrapperContent({children})  {
   const content = useSelector((state) => state.scriptsContent.current_script);
@@ -41,7 +43,6 @@ export default function WrapperContent({children})  {
     {
       name: "Crispy",
       repositoryName: "crispy-scripts",
-      // notScript: true,
     },
     ...scriptsList,
   ];
@@ -58,9 +59,9 @@ export default function WrapperContent({children})  {
               <div className="px-lg-2 col-lg-3 d-lg-flex">
                 <DivisorColumn className="mb-4 mb-lg-0" />
 
-                <div className="px-lg-4 py-2 py-lg-4">
-                  <div>
-                    <h5 className="h5 mb-3 mb-lg-4">
+                <div className="px-lg-4">
+                  <div className="pt-lg-2">
+                    <h5 className="h4 my-4 my-lg-5">
                       Also check out:
                     </h5>
                   </div>
@@ -80,7 +81,7 @@ export default function WrapperContent({children})  {
                           rel="noreferrer"
                           className="text-uppercase"
                         >
-                          {script.name} {`${script.notScript ? '' : 'scripts'}`}
+                          {script.name} scripts
                         </a>
                       </div>
                     ))}

@@ -22,7 +22,7 @@ function ScriptArticle(){
 
     return (
         <div className='mb-4 mb-lg-5'>
-            <TitleScript className="h2 fw-bold text-capitalize">{scriptTitle}</TitleScript>
+            <TitleScript className="h2 my-4 my-lg-5 fw-bold text-capitalize">{scriptTitle}</TitleScript>
 
             <AboutContent
                 hasUnlimitedLines={true}

@@ -9,7 +9,6 @@ import './styles/global.css';
 
 import App from './App';
 import Footer from './common/components/Footer';
-import { HashRouter as Router } from 'react-router-dom';
 
 const WrapperContainerX = styled.div`
   max-width: 100vw;
@@ -21,9 +20,7 @@ root.render(
   <React.StrictMode>
     <WrapperContainerX>
       <Provider store={store}>
-        <Router>
-            <App />
-        </Router>
+          <App />
         <Footer />
       </Provider>   
     </WrapperContainerX>

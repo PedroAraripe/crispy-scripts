@@ -63,7 +63,11 @@ export default function Navbar() {
       
       {scriptsNav.map((script, index) => (
         <Link
-          to={`/scripts/?project_name=${script.repositoryName}`}
+          to={{
+            pathname: "/",
+            search: `?project_name=${script.repositoryName}`,
+            state: { fromDashboard: true }
+          }}
           className={index !== scriptsNav.length -1 ? 'me-2 me-lg-3' : ''}
           key={index}
           style={{textDecoration: 'none'}}

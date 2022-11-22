@@ -2,6 +2,7 @@ import React from "react";
 import {
   Routes,
   Route,
+  HashRouter as Router,
 } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -11,7 +12,7 @@ import WrapperContent from "./common/components/WrapperContentTemplate";
 
 export default function App() {  
   return (
-    <>
+    <Router>
       <Navbar />
 
       <div className="py-5 my-lg-5"></div>
@@ -22,7 +23,6 @@ export default function App() {
           <Route path="/scripts"  element={<RepositoryTemplate />} />
         </Routes>
       </WrapperContent>
-      
-    </>
+    </Router>
   )
 }
