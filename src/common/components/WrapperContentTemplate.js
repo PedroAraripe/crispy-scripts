@@ -19,7 +19,8 @@ const DivisorColumn = styled.div`
 const ArticleBanner = styled.div`
   max-height: 250px;
   ${props => props.backgroundUrl? 'aspect-ratio: 3': ''};
-  background: url("${props => props.backgroundUrl}") no-repeat;
+  background: linear-gradient(to bottom, #cc33331a, #6c6069ba), url("${props => props.backgroundUrl}");
+  background-repeat: no-repeat;
   width: 100%;
   background-color: gray;
   border-radius: 10px;

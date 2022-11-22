@@ -79,3 +79,15 @@ section li{
 .extra-info {
   border-left: 1px solid white;
 }
+
+.active-route .script-nav {
+  transition: all 0.3s;
+  color: var(--theme-red);
+  text-decoration: underline var(--theme-white) 1px;
+  text-underline-offset: 0.3rem;
+}
+
+.active-route .script-nav:hover {
+  color: var(--theme-white);
+  text-decoration: underline var(--theme-red) 1px;
+}
