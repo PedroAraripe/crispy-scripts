@@ -1,26 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import scriptsNav from "../common/constants/scriptsList.js";
-import { getQueryParams } from '../common/utils/routerHelpers.js';
 
 export const getData = createAsyncThunk(
   'scriptsContent/getData',
-  async () => {
-    
-    const { project_name }= getQueryParams();
+  async (projectName) => {
     const totalData = [];
 
-    
     const scriptsItems = scriptsNav.filter(script => {
-      if(project_name) {
-        return script.repositoryName === project_name;
+      if(projectName) {
+        return script.repositoryName === projectName;
       }
       
       return true;
       
     });
     
-    console.log({scriptsItems, project_name})
     await Promise.allSettled(scriptsItems.map(async (script) => {
       const url = `https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`;
       const { data } = await axios.get(url);
