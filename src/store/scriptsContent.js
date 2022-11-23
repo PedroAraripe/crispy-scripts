@@ -3,58 +3,51 @@ import axios from 'axios';
 import scriptsNav from "../common/constants/scriptsList.js";
 
 // const token=''
-
 // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-export const getData = createAsyncThunk(
-  'scriptsContent/getData',
-  async (projectName) => {
-    const totalData = [];
+async function getScriptsPreview(projectName) {
+  const foldersScripts = [];
 
-    const scriptsItems = scriptsNav.filter(script => {
-      if(projectName) {
-        return script.repositoryName === projectName;
-      }
-      
-      return true;
-      
-    });
-    
-    await Promise.allSettled(scriptsItems.map(async (script) => {
+  const scriptsCategories = scriptsNav.filter(script => {
+    return !projectName ? true: projectName === script.repositoryName; 
+  });
+
+  await Promise.allSettled(scriptsCategories.map(async (script) => {
       const url = `https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`;
       const { data } = await axios.get(url);
 
-      data
-        .filter(item => item.name.toUpperCase() !== "LICENSE")
-        .map(item => {
-          item.repository = {
-            name: script.name,
-            repository_name: script.repositoryName,
-            repository_file_termination: script.fileTermination,
-          };
+      const sugestedScript = data.filter(item => item.name.toUpperCase() !== "LICENSE")[0];
 
-          totalData.push(item);
-        })
+      foldersScripts.push({
+        ...sugestedScript,
+        repository: {
+          repository_name: script.repositoryName,
+          name: script.name,
+          file_termination: script.fileTermination,
+        }
+      });
     }));
 
-    await Promise.allSettled(totalData.map(async (script) => {
+    await Promise.allSettled(foldersScripts.map(async (script) => {
       const urlText = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/contents/${script.name}/README.md`;
-      const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/commits?path=${script.name}&page=1&per_page=1`;
-      const urlCode = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/contents/${script.name}/run.${script.repository.repository_file_termination}`;
+      const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${script.repository.repository_name}/commits?path=${script.name}`;
 
       const { data: dataText } = await axios.get(urlText);
       const { data: dataLastCommit } = await axios.get(urlLastCommit);
-      const { data: dataCode } = await axios.get(urlCode);
 
       script.script = {
         data_text: dataText,
         last_commit: dataLastCommit[0],
-        data_code: dataCode,
       };
     }));
 
-    return totalData;
-  }
+    return foldersScripts;
+
+} 
+
+export const getData = createAsyncThunk(
+  'scriptsContent/getData',
+  getScriptsPreview
 );
 
 export const getScriptData = createAsyncThunk(

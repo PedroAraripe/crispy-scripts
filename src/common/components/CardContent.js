@@ -42,7 +42,7 @@ export default function CardContent ({content, index, className = ""}) {
   const scriptName = content.name.split("_").join(" ");
   const lastScriptCommit = content.script?.last_commit.commit.author.date;
   const decodedTextContent = atob(content.script?.data_text.content).split("\n").join("<br>");
-  const imageBanner = `https://picsum.photos/seed/${content.script?.data_code.sha}/400/300`
+  const imageBanner = `https://picsum.photos/seed/${content.sha}/400/300`
 
   const urlRedirect = `/scripts/?project_name=${content.repository.repository_name}&script_name=${content.name}`;
 
