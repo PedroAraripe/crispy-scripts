@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import scriptsNav from "../common/constants/scriptsList.js";
 
-axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.API_KEY}`;
+// const token=''
+
+// axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 export const getData = createAsyncThunk(
   'scriptsContent/getData',
