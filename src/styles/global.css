@@ -10,7 +10,11 @@ html,body {
 }
 
 @media (max-width: 992px) {
-    .container {
+  html,body {
+    background: linear-gradient(260deg, #202124 5%, black);
+  }
+
+  .container {
       padding-left: 1rem;
       padding-right: 1rem;
     }
