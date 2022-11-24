@@ -59,7 +59,7 @@ export default function WrapperContent({children})  {
 
               <hr className="d-lg-none"/>
 
-              <div className="pe-lg-4 ps-lg-5 mb-5 pb-4 d-flex flex-column align-items-center d-lg-block">
+              <div className="text-center text-lg-start pe-lg-4 ps-lg-5 mb-5 pb-4 d-flex flex-column align-items-center d-lg-block">
                   <div className="my-4 my-lg-5 pt-1"> </div>
 
                   <HighlightedItem noHover fontSize="1.2rem" className="text-capitalize">
