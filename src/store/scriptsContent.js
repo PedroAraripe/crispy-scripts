@@ -16,16 +16,22 @@ async function getScriptsPreview(projectName) {
       const url = `https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`;
       const { data } = await axios.get(url);
 
-      const sugestedScript = data.filter(item => item.name.toUpperCase() !== "LICENSE")[0];
+      let sugestedScript = data.filter(item => item.name.toUpperCase() !== "LICENSE");
 
-      foldersScripts.push({
-        ...sugestedScript,
-        repository: {
-          repository_name: script.repositoryName,
-          name: script.name,
-          file_termination: script.fileTermination,
-        }
-      });
+      if(!projectName) {
+        sugestedScript = [sugestedScript[0]];
+      }
+
+      sugestedScript.forEach(scriptItem => {
+        foldersScripts.push({
+          ...scriptItem,
+          repository: {
+            repository_name: script.repositoryName,
+            name: script.name,
+            file_termination: script.fileTermination,
+          }
+        });
+      })
     }));
 
     await Promise.allSettled(foldersScripts.map(async (script) => {
@@ -53,12 +59,17 @@ export const getData = createAsyncThunk(
 export const getScriptData = createAsyncThunk(
   'scriptsContent/getScriptData',
   async ({projectName, scriptName}) => {
+    const script = scriptsNav.find(script => script.repositoryName === projectName);
+    
+    if(!script) {
+      return {};
+    }
+
     const currentScriptData = {
       repositoryName: projectName,
       name: scriptName,
+      file_termination: script.fileTermination
     };
-
-    const script = scriptsNav.find(script => script.repositoryName === projectName);
 
     const urlText = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/README.md`;
     const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${projectName}/commits?path=${scriptName}&page=1&per_page=1`;
@@ -72,6 +83,7 @@ export const getScriptData = createAsyncThunk(
       data_text: dataText,
       last_commit: dataLastCommit[0],
       data_code: dataCode,
+      script_language: script.name.toLowerCase(),
     };
 
     return currentScriptData;
@@ -91,10 +103,6 @@ export const scriptsContent = createSlice({
     builder.addCase(getData.fulfilled, (state, action) => {
       state.value = action.payload;
     })
-
-    // builder.addCase(getScriptCategoryData.fulfilled, (state, action) => {
-    //   state.value = action.payload;
-    // })
 
     builder.addCase(getScriptData.fulfilled, (state, action) => {
       state.current_script = action.payload;
