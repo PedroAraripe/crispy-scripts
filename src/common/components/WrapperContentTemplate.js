@@ -38,7 +38,7 @@ export default function WrapperContent({children})  {
 
   useEffect(() => {
       if(content?.script) {
-        const urlImage = `https://picsum.photos/seed/${content.script?.data_code.sha}/800/600`;
+        const urlImage = `https://picsum.photos/seed/${content.script.data_text.sha}/800/600`;
         dispatch(setShowBannerValue(urlImage));
       }
   }, [content]);
