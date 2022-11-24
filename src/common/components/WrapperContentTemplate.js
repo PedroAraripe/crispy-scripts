@@ -1,8 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { setShowBannerValue } from "../../store/banner";
 import scriptsList from "../constants/scriptsList";
+import { HighlightedItem } from "./Contents";
 
 const DivisorColumn = styled.div`
   opacity: 0.6;
@@ -18,7 +20,7 @@ const DivisorColumn = styled.div`
 
 const ArticleBanner = styled.div`
   max-height: 250px;
-  ${props => props.backgroundUrl? 'aspect-ratio: 3': ''};
+  aspect-ratio: 3;
   background: linear-gradient(to bottom, #cc33331a, #6c6069ba), url("${props => props.backgroundUrl}");
   background-repeat: no-repeat;
   width: 100%;
@@ -33,6 +35,9 @@ export default function WrapperContent({children})  {
   const content = useSelector((state) => state.scriptsContent.current_script);
   const bannerUrl = useSelector((state) => state.banner.showBanner);
   const dispatch = useDispatch();
+
+  const [searchParams] = useSearchParams();
+  const scriptName = searchParams.get("script_name");
 
   useEffect(() => {
       if(content?.script) {
@@ -52,7 +57,7 @@ export default function WrapperContent({children})  {
     return (
       <div className="container  py-4" style={{ borderRadius: "10px" }}>
         <div className="bg-dark">
-          <ArticleBanner backgroundUrl={bannerUrl} />
+          {scriptName ? <ArticleBanner backgroundUrl={bannerUrl} /> : ''}
           <div className="px-2 px-lg-4">
             <div className="row py-2 py-lg-4">
               <div className="col-lg-9 px-lg-4">{children}</div>
@@ -61,28 +66,28 @@ export default function WrapperContent({children})  {
                 <DivisorColumn className="mb-4 mb-lg-0" />
 
                 <div className="px-lg-4">
-                  <div className="pt-lg-2">
-                    <h5 className="h4 my-4 my-lg-5">
-                      Also check out:
-                    </h5>
-                  </div>
+                    <div className="pt-lg-2 my-4 my-lg-5">
+                      <HighlightedItem fontSize="1.6rem">
+                        Also check:
+                      </HighlightedItem>
+                    </div>
 
                   <ul className="p-0">
                     {extraItems.map((script, index) => (
-                      <div className="h6" key={script.name}>
-                        <span>{index + 1}.</span>{" "}
+                      <div key={script.name}>
                         <a
                           href={`https://github.com/PedroAraripe/${script.repositoryName}`}
-                          style={{
-                            color: "var(--theme-red)",
-                            textUnderlineOffset: "0.3rem",
-                            textDecorationThickness: "0px",
-                          }}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-uppercase"
+                          style={{textDecoration: "none"}}
                         >
-                          {script.name} scripts
+                          <HighlightedItem fontSize="1.2rem" className="text-capitalize">
+                            {index + 1}.{" "} 
+                          </HighlightedItem>
+
+                          <HighlightedItem fontSize="1.2rem" className="text-capitalize" themeReverse>
+                            {script.name.toLowerCase()} source
+                          </HighlightedItem>
                         </a>
                       </div>
                     ))}

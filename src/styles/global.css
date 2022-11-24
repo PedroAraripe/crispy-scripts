@@ -91,3 +91,14 @@ section li{
   color: var(--theme-white);
   text-decoration: underline var(--theme-red) 1px;
 }
+
+.card-image-skeleton {
+    width: 100%;
+    aspect-ratio: 1.5;
+    background-color: gray;
+    border-radius: 10px;
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+    background-size: cover;
+    position: relative;
+}

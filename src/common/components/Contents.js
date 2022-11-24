@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AboutContent = styled.p`
+export const AboutContent = styled.div`
   letter-spacing: 0.2rem;
   font-size: 0.9rem;
   color: var(--theme-white);
@@ -18,11 +18,6 @@ ${props => !props.hasUnlimitedLines ? `
   ` }
 `;
 
-export const TitleScript = styled.h1`
-  textDecoration: none;
-  color: var(--theme-white)
-;`
-
 export const CardImage = styled.div`
   background: url("${props => props.backgroundUrl}") no-repeat;
   width: 100%;
@@ -32,4 +27,24 @@ export const CardImage = styled.div`
   filter: brightness(90%);
   background-size: cover;
   position: relative;
+`;
+
+export const HighlightedItem = styled.span`
+  &, & > * {
+    color: ${props => props.themeReverse ? 'var(--theme-red)' : 'var(--theme-white)'};
+    text-decoration: none;
+    font-weight: bold;
+    font-size: ${(props) => props.fontSize ? props.fontSize : '0.8rem'};
+    letter-spacing: -0.1rem};
+    transition: all 0.2s;
+    
+    @media (min-width: 1200px) {
+      font-size: ${(props) => props.fontSize ? `calc(${props.fontSize} * ${1.2})` : '1.2rem'};
+      letter-spacing: -0.1rem};
+    }
+  }
+
+  &:hover {
+    color: ${props => !props.themeReverse ? 'var(--theme-red)' : 'var(--theme-white)'};
+  }
 `;

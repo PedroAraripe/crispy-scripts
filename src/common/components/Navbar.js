@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import scriptsNav from "../constants/scriptsList.js";
+import { HighlightedItem } from './Contents.js';
 
 const LogoHome = styled.div`
   & {
@@ -29,26 +30,6 @@ const LogoHome = styled.div`
   }
 `;
 
-const LinkItem = styled.div`
-  &, & > * {
-    color: var(--theme-white);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.8rem;
-    letter-spacing: -0.1rem;
-    transition: all 0.2s;
-
-    @media (min-width: 1200px) {
-      font-size: 1.2rem;
-      letter-spacing: -0.1rem;
-    }
-  }
-
-  &:hover {
-    color: ${props => !props.isCurrent ? 'var(--theme-red)' : 'var(--theme-white)'};
-  }
-`;
-
 export default function Navbar() {
 
   return (
@@ -73,9 +54,9 @@ export default function Navbar() {
             key={index}
             style={{textDecoration: 'none'}}
           >
-            <LinkItem className="script-nav">
+            <HighlightedItem className="script-nav">
               {script.name}
-            </LinkItem>
+            </HighlightedItem>
           </NavLink>
         ))}
       </div>
