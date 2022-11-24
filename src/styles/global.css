@@ -4,7 +4,7 @@
 }
 
 html,body {
-  background-color: #202124;
+  background: linear-gradient(225deg, #202124 20%, black);
   font-size: 18px;
   font-family: 'Montserrat', sans-serif !important;
 }

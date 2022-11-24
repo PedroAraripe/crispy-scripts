@@ -8,11 +8,15 @@ const WrapperFooter = styled.footer`
 `
 
 function FooterSection() {
-
     return (
-            <WrapperFooter className='p-5 d-flex align-items-center justify-content-center text-center text-capitalize'>
-                Designed & Built by Lucas Araripe
-            </WrapperFooter>
+        <WrapperFooter className='p-5 d-flex align-items-center justify-content-center text-center text-capitalize'>
+            <span style={{color: "gray"}}>
+                Designed & Built by
+            </span>
+            <a href="https://github.com/PedroAraripe" style={{textDecoration: 'none', color: "gray"}}>
+                Lucas Araripe
+            </a>
+        </WrapperFooter>
     );
   }
   

@@ -20,7 +20,7 @@ export default function Home () {
       }, [projectName]);
 
     return (
-        <div className="row">
+        <div className="row mb-5">
             {
                 (!scriptsContent || !scriptsContent.length) ?
                 [...Array(4).keys()].map((_,index) => {

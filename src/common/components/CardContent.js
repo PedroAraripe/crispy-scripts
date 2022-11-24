@@ -2,7 +2,7 @@ import moment from "moment/moment";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AboutContent, CardImage } from "./Contents";
+import { AboutContent, CardImage, HighlightedItem } from "./Contents";
 import { useNavigate  } from "react-router-dom";
 
 const ScriptTag = styled.span`
@@ -73,7 +73,9 @@ export default function CardContent ({content, index, className = ""}) {
           style={{textDecoration: 'none', color: "var(--theme-white)"}}
           className="h6 fw-bold text-capitalize"
         >
-            {scriptName}
+            <HighlightedItem noLetterSpacing fontSize="0.8rem" className="text-capitalize">
+              {scriptName}
+            </HighlightedItem>
         </Link>
       </div>
 

@@ -1,27 +1,15 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { setShowBannerValue } from "../../store/banner";
 import scriptsList from "../constants/scriptsList";
 import { HighlightedItem } from "./Contents";
 
-const DivisorColumn = styled.div`
-  opacity: 0.6;
-  background-color: white;
-  height: 1.5px;
-  width: 100%;
-
-  @media (min-width: 1199px) {
-    height: 100%;
-    width: 1.5px;
-  }
-`;
-
 const ArticleBanner = styled.div`
   max-height: 250px;
   aspect-ratio: 3;
-  background: linear-gradient(to bottom, #cc33331a, #6c6069ba), url("${props => props.backgroundUrl}");
+  background: linear-gradient(to bottom, #26030366, #00000000), url("${props => props.backgroundUrl}");
   background-repeat: no-repeat;
   width: 100%;
   background-color: gray;
@@ -35,9 +23,18 @@ export default function WrapperContent({children})  {
   const content = useSelector((state) => state.scriptsContent.current_script);
   const bannerUrl = useSelector((state) => state.banner.showBanner);
   const dispatch = useDispatch();
-
+  
   const [searchParams] = useSearchParams();
   const scriptName = searchParams.get("script_name");
+  const projectName = searchParams.get("project_name");
+  
+  const sourceCodes = [
+    {
+      name: "Crispy",
+      repositoryName: "crispy-scripts",
+    },
+    ...scriptsList,
+  ];
 
   useEffect(() => {
       if(content?.script) {
@@ -45,35 +42,32 @@ export default function WrapperContent({children})  {
         dispatch(setShowBannerValue(urlImage));
       }
   }, [content]);
-  const extraItems = [
-    {
-      name: "Crispy",
-      repositoryName: "crispy-scripts",
-    },
-    ...scriptsList,
-  ];
-  
 
     return (
       <div className="container  py-4" style={{ borderRadius: "10px" }}>
-        <div className="bg-dark">
+        <div className="bg-dark" style={{border: '1px solid #00000080', borderRadius: '15px'}}>
           {scriptName ? <ArticleBanner backgroundUrl={bannerUrl} /> : ''}
-          <div className="px-2 px-lg-4">
+          <div className="px-3 px-lg-4">
             <div className="row py-2 py-lg-4">
               <div className="col-lg-9 px-lg-4">{children}</div>
 
               <div className="px-lg-2 col-lg-3 d-lg-flex">
-                <DivisorColumn className="mb-4 mb-lg-0" />
+                
+              <div className="d-none d-lg-flex" style={{height: '100%'}}>
+                <div className="vr"></div>
+              </div>
 
-                <div className="px-lg-4">
-                    <div className="pt-lg-2 my-4 my-lg-5">
-                      <HighlightedItem fontSize="1.6rem">
-                        Also check:
-                      </HighlightedItem>
-                    </div>
+              <hr className="d-lg-none"/>
 
-                  <ul className="p-0">
-                    {extraItems.map((script, index) => (
+              <div className="pe-lg-4 ps-lg-5 mb-5 pb-4 d-flex flex-column align-items-center d-lg-block">
+                  <div className="my-4 my-lg-5 pt-1"> </div>
+
+                  <HighlightedItem noHover fontSize="1.2rem" className="text-capitalize">
+                    Source Codes:
+                  </HighlightedItem>
+
+                  <ul className="d-flex flex-column d-lg-block align-items-center p-0 ps-2 pt-2">
+                    {sourceCodes.map((script) => (
                       <div key={script.name}>
                         <a
                           href={`https://github.com/PedroAraripe/${script.repositoryName}`}
@@ -81,22 +75,71 @@ export default function WrapperContent({children})  {
                           rel="noreferrer"
                           style={{textDecoration: "none"}}
                         >
-                          <HighlightedItem fontSize="1.2rem" className="text-capitalize">
-                            {index + 1}.{" "} 
-                          </HighlightedItem>
 
-                          <HighlightedItem fontSize="1.2rem" className="text-capitalize" themeReverse>
-                            {script.name.toLowerCase()} source
+                          <HighlightedItem fontSize="1.0rem" className="text-capitalize" themeReverse>
+                            {script.repositoryName.split("-").join(" ").toLowerCase()}
                           </HighlightedItem>
                         </a>
                       </div>
                     ))}
                   </ul>
-                </div>
+
+
+                  {!(content?.script?.script_language && projectName) ? '' : <>
+                    <div className="my-4 my-lg-5" />
+
+                    <HighlightedItem noHover fontSize="1.2rem">
+                      Check on github:
+                    </HighlightedItem>
+
+                    <div className="p-0 ps-2 pt-2">
+                      <a href={`https://github.com/PedroAraripe/${projectName}/tree/main/${scriptName}/${content.script.data_code.name}`} style={{textDecoration: "none"}}>
+                        <HighlightedItem fontSize="1rem" className="text-capitalize" themeReverse>
+                          {content?.name?.split("_")?.join(" ")?.toLowerCase()}
+                        </HighlightedItem>
+                      </a>
+                    </div>
+
+                    <div className="p-0 ps-2 pt-2">
+                      <a href={`https://github.com/PedroAraripe/${projectName}/tree/main/${scriptName}/${content.script.data_code.name}`} style={{textDecoration: "none"}}>
+                        <HighlightedItem fontSize="1rem" className="text-capitalize" themeReverse>
+                          {projectName?.split("-")?.join(" ")?.toLowerCase()}
+                        </HighlightedItem>
+                      </a>
+                    </div>
+                  </> }
+
+                  
+                  {!content?.script?.script_language ? '' : <>
+                    <div className="my-4 my-lg-5" />
+
+                    <HighlightedItem noHover fontSize="1.2rem">
+                      Continue reading:
+                    </HighlightedItem>
+
+                    <div className="p-0 ps-2 pt-2">
+                      <NavLink
+                        to={{
+                          pathname: "/",
+                          search: `?project_name=${projectName}`,
+                          state: { fromDashboard: true }
+                        }}
+                        style={{textDecoration: 'none'}}
+                      >
+                        <HighlightedItem fontSize="1rem" className="text-capitalize pe-2" themeReverse>
+                          {content.script.script_language}
+                        </HighlightedItem>
+                      </NavLink>
+                      
+                      <HighlightedItem noHover fontSize="1rem">
+                        Articles
+                      </HighlightedItem>
+                    </div>
+                  </> }
+              </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     );

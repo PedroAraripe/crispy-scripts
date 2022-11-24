@@ -19,7 +19,8 @@ ${props => !props.hasUnlimitedLines ? `
 `;
 
 export const CardImage = styled.div`
-  background: url("${props => props.backgroundUrl}") no-repeat;
+  background: linear-gradient(to bottom, #26030366, #00000000),url("${props => props.backgroundUrl}");
+  background-repeat: no-repeat;
   width: 100%;
   aspect-ratio: 1.5;
   background-color: gray;
@@ -35,16 +36,32 @@ export const HighlightedItem = styled.span`
     text-decoration: none;
     font-weight: bold;
     font-size: ${(props) => props.fontSize ? props.fontSize : '0.8rem'};
-    letter-spacing: -0.1rem};
+
+    // Letter Spacing
+    ${props => {
+      if(props.noLetterSpacing) {
+        return;
+      }
+
+      return 'letter-spacing: -0.1rem};'
+    }}
+    
     transition: all 0.2s;
     
     @media (min-width: 1200px) {
       font-size: ${(props) => props.fontSize ? `calc(${props.fontSize} * ${1.2})` : '1.2rem'};
-      letter-spacing: -0.1rem};
     }
   }
 
-  &:hover {
-    color: ${props => !props.themeReverse ? 'var(--theme-red)' : 'var(--theme-white)'};
-  }
+    // Hover effect
+    ${props => {
+      if(props.noHover) {
+        return;
+      }
+
+      const hoverColor = props.themeReverse ? 'var(--theme-white)' : 'var(--theme-red)';
+
+      return `&:hover { color : ${hoverColor};}`
+    }
+}
 `;
