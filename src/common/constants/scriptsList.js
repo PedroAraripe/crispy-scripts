@@ -1,12 +1,17 @@
 module.exports = [
   {
     name: 'SHELL',
-    repositoryName: 'shell-automations',
-    fileTermination: 'sh'
+    repositoryName: 'shell-tips',
+    codeFile: 'run.sh'
   },
   {
     name: 'JAVASCRIPT',
     repositoryName: 'javascript-tips',
-    fileTermination: 'js'
+    codeFile: 'run.js'
+  },
+  {
+    name: 'C#',
+    repositoryName: 'c-sharp-tips',
+    codeFile: 'Program.cs'
   },
 ]

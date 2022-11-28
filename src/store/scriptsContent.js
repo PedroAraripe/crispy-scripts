@@ -16,7 +16,7 @@ async function getScriptsPreview(projectName) {
       const url = `https://api.github.com/repos/PedroAraripe/${script.repositoryName}/contents/`;
       const { data } = await axios.get(url);
 
-      let sugestedScript = data.filter(item => item.name.toUpperCase() !== "LICENSE");
+      let sugestedScript = data.filter(item => item.name.toLowerCase() !== "LICENSE".toLowerCase() && item.name.toLowerCase() !== ".gitignore".toLowerCase());
 
       if(!projectName) {
         sugestedScript = [sugestedScript[0]];
@@ -28,7 +28,7 @@ async function getScriptsPreview(projectName) {
           repository: {
             repository_name: script.repositoryName,
             name: script.name,
-            file_termination: script.fileTermination,
+            file_termination: script.codeFile,
           }
         });
       })
@@ -68,12 +68,14 @@ export const getScriptData = createAsyncThunk(
     const currentScriptData = {
       repositoryName: projectName,
       name: scriptName,
-      file_termination: script.fileTermination
+      file_termination: script.codeFile
     };
+
+    console.log({script})
 
     const urlText = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/README.md`;
     const urlLastCommit = `https://api.github.com/repos/PedroAraripe/${projectName}/commits?path=${scriptName}&page=1&per_page=1`;
-    const urlCode = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/run.${script.fileTermination}`;
+    const urlCode = `https://api.github.com/repos/PedroAraripe/${projectName}/contents/${scriptName}/${script.codeFile}`;
 
     const { data: dataText } = await axios.get(urlText);
     const { data: dataLastCommit } = await axios.get(urlLastCommit);

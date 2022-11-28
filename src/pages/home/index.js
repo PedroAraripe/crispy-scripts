@@ -47,7 +47,7 @@ export default function Home () {
                             key={index}
                             content={item}
                             index={index}
-                            className="col-lg-6"
+                            className="col-lg-6 mb-lg-4"
                         />
                     )
                 })
